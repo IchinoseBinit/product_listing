@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UpdateProductPage extends StatefulWidget {
-  const UpdateProductPage({super.key, required this.id});
+  const UpdateProductPage({super.key, required this.id, required this.body});
 
   final String id;
+  final Map<String, dynamic> body;
 
   @override
   State<UpdateProductPage> createState() => _UpdateProductPageState();
@@ -17,6 +18,15 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
   final descriptionController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    nameController.text = widget.body['name'];
+    priceController.text = widget.body['price'].toString();
+    quantityController.text = widget.body['quantity'].toString();
+    descriptionController.text = widget.body['description'];
+  }
+
+  @override
   void dispose() {
     nameController.dispose();
     priceController.dispose();
@@ -27,6 +37,7 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.body);
     return Scaffold(
       appBar: AppBar(
         title: Text("Add Product"),
